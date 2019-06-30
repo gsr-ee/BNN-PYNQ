@@ -63,7 +63,7 @@ void makeNetwork(network<mse, adagrad> & nn) {
 
 extern "C" void load_parameters(const char* path) {
 #include "config.h"
-	FoldedMVInit("cnvW11A11-pynq");
+	FoldedMVInit("cnvW11A11");
 	network<mse, adagrad> nn;
 	makeNetwork(nn);
 	cout << "Setting network weights and thresholds in accelerator..." << endl;
@@ -76,7 +76,7 @@ extern "C" void load_parameters(const char* path) {
 	FoldedMVLoadLayerMem(path, 5, L5_PE, L5_WMEM, L5_TMEM, L5_API);
 	FoldedMVLoadLayerMem(path, 6, L6_PE, L6_WMEM, L6_TMEM, L6_API);
 	FoldedMVLoadLayerMem(path, 7, L7_PE, L7_WMEM, L7_TMEM, L7_API);
-	FoldedMVLoadLayerMem(path, 8, L8_PE, L8_WMEM, L8_TMEM, 0);
+	FoldedMVLoadLayerMem(path, 8, L8_PE, L8_WMEM, L8_TMEM, L8_API);
 }
 
 extern "C" int inference(const char* path, int results[64], int number_class, float *usecPerImage) {
@@ -85,7 +85,7 @@ extern "C" int inference(const char* path, int results[64], int number_class, fl
 	std::vector<int> class_result;
 	float usecPerImage_int;
 
-	FoldedMVInit("cnvW11A11-pynq");
+	FoldedMVInit("cnvW11A11");
 	network<mse, adagrad> nn;
 	makeNetwork(nn);
 	parse_cifar10(path, &test_images, &test_labels, -1.0, 1.0, 0, 0);
@@ -106,7 +106,7 @@ extern "C" int* inference_multiple(const char* path, int number_class, int *imag
 	float usecPerImage_int;
 	int * result;
 
-	FoldedMVInit("cnvW11A11-pynq");
+	FoldedMVInit("cnvW11A11");
 	network<mse, adagrad> nn;
 	makeNetwork(nn);
 	parse_cifar10(path, &test_images, &test_labels, -1.0, 1.0, 0, 0);
