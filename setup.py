@@ -37,7 +37,7 @@ from glob import glob
 import site 
 
 if os.environ['BOARD'] != 'Ultra96' and os.environ['BOARD'] != 'Pynq-Z1' and os.environ['BOARD'] != 'Pynq-Z2' and os.environ['BOARD'] != 'Zedboard':
-	print("Only supported on a Ultra96, Pynq-Z1 or Pynq-Z2 Board")
+	print("Only supported on a Ultra96, Zedboard, Pynq-Z1 or Pynq-Z2 Board")
 	exit(1)
 
 setup(
@@ -60,9 +60,10 @@ setup(
 
 # if os.environ['BOARD'] == "Ultra96":
 	# PLATFORM="ultra96"
-# else:
+# elsif os.environ['BOARD'] = 'Pynq-Z1' or os.environ['BOARD'] = 'Pynq-Z2':
 	# PLATFORM="pynqZ1-Z2"
-
+#else
+	# PLATFORM="zedboard"
 # def run_make(src_path, network, output_type):
 	# status = subprocess.check_call(["bash", src_path + "/make-sw.sh", network, output_type])
 	# if status is not 0:
@@ -80,7 +81,6 @@ setup(
 	# run_make("bnn/src/network/", "cnvW1A1", "python_sw")
 	# run_make("bnn/src/network/", "cnvW1A2", "python_sw")
 	# run_make("bnn/src/network/", "cnvW2A2", "python_sw")
-	# run_make("bnn/src/network/", "cnvW11A11", "python_sw")
 	# run_make("bnn/src/network/", "lfcW1A1", "python_sw")
 	# run_make("bnn/src/network/", "lfcW1A2", "python_sw")
 
@@ -89,7 +89,6 @@ setup(
 	# run_make("bnn/src/network/", "cnvW1A1", "python_hw")
 	# run_make("bnn/src/network/", "cnvW1A2", "python_hw")
 	# run_make("bnn/src/network/", "cnvW2A2", "python_hw")
-	# run_make("bnn/src/network/", "cnvW11A11", "python_hw")
 	# run_make("bnn/src/network/", "lfcW1A1", "python_hw")
 	# run_make("bnn/src/network/", "lfcW1A2", "python_hw")
 # else:

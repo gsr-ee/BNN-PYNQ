@@ -75,7 +75,10 @@ cd $OLD_DIR
 
 if [[ ("$BOARD" == "Pynq-Z1") || ("$BOARD" == "Pynq-Z2") ]]; then
   DEF_BOARD="PYNQ"
-  PLATFORM="pynqZ1-Z2"  
+  PLATFORM="pynqZ1-Z2"
+elif [[ ("$BOARD" == "Zedboard") ]]; then
+  DEF_BOARD="PYNQ"
+  PLATFORM="zedboard"   
 elif [[ ("$BOARD" == "Ultra96") ]]; then
   DEF_BOARD="ULTRA"
   PLATFORM="ultra96"

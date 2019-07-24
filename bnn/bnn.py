@@ -40,7 +40,6 @@ RUNTIME_SW = "python_sw"
 NETWORK_CNVW1A1 = "cnvW1A1"
 NETWORK_CNVW1A2 = "cnvW1A2"
 NETWORK_CNVW2A2 = "cnvW2A2"
-NETWORK_CNVW11A11 = "cnvW11A11"
 NETWORK_LFCW1A1 = "lfcW1A1"
 NETWORK_LFCW1A2 = "lfcW1A2"
 
@@ -48,8 +47,8 @@ if os.environ['BOARD'] == 'Ultra96':
 	PLATFORM="ultra96"
 elif os.environ['BOARD'] == 'Pynq-Z1' or os.environ['BOARD'] == 'Pynq-Z2':
 	PLATFORM="pynqZ1-Z2"
-elif os.environ['BOARD'] == 'Zedboard':
-	PLATFORM="pynqZ1-Z2"
+elif os.environ['BOARD'] == 'Zedboard'
+	PLATFORM="zedboard"
 else:
 	raise RuntimeError("Board not supported")
 
