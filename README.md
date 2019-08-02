@@ -8,7 +8,7 @@ Now, there are multiple implementations available supporting different precision
 - 1 bit weights and 2 bit activation (W1A2) for CNV and LFC
 - 2 bit weights and 2 bit activation (W2A2) for CNV
 
-We support 3 boards for hardware acceleration which are Pynq-Z1, Pynq-Z2 and Ultra96 (with PYNQ image).
+We support 3 boards for hardware acceleration which are Pynq-Z1, Pynq-Z2, Zedboard and Ultra96 (with PYNQ image).
 
 ## Citation
 If you find BNN-PYNQ useful, please cite the <a href="https://arxiv.org/abs/1612.07119" target="_blank">FINN paper</a>:
@@ -47,9 +47,11 @@ The repo is organized as follows:
 		- training: scripts to train on the Cifar10, GTSRB and MNIST datasets and scripts to pack the weights in a binary format which can be read by the overlay
 	-	bitstreams: contains the bitstreams for the 5 overlays
 		- pynqZ1-Z2: bitstreams for Pynq devices
+		- zedboard: bitstreams for Pynq devices
 		- ultra96: bitstreams for Ultra96 devices
 	-	libraries: pre-compiled shared objects for low-level driver of the 5 overlays each for hardware and software runtime
 		- pynqZ1-Z2: shared objects used by Pynq devices
+		- zedboard: bitstreams for Pynq devices
 		- ultra96: shared objects used by ultra96
 	-	params: set of trained parameters for the 5 overlays:
 		- <a href="http://yann.lecun.com/exdb/mnist/" target="_blank"> MNIST </a> and <a href="https://www.nist.gov/srd/nist-special-database-19" target="_blank"> NIST </a> dataset for LFC network. Note that NIST dataset is only applicable to LFC-W1A1 by default.
@@ -67,7 +69,7 @@ Following the step-by-step instructions:
 3.	Set the XILINX_BNN_ROOT environment variable to `<clone_path>/BNN_PYNQ/bnn/src/`
 4.	Launch the shell script make-hw.sh with passing parameters for target network, target platform and mode, with the command `./make-hw.sh {network} {platform} {mode}` where:
 	- network can be cnvW1A1, cnvW1A2, cnvW2A2 or lfcW1A1, lfcW1A2;
-	- platform can be pynqZ1-Z2 or ultra96;
+	- platform can be pynqZ1-Z2, zedboard or ultra96;
 	- mode can be `h` to launch Vivado HLS synthesis, `b` to launch the Vivado project (needs HLS synthesis results), `a` to launch both;
 5.	The results will be visible in `clone_path/BNN_PYNQ/bnn/src/network/output/` that is organized as follows:
 	- bitstream: contains the generated bitstream(s);
