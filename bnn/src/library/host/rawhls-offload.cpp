@@ -47,11 +47,10 @@
 #include <iostream>
 
 using namespace std;
-using namespace tiny_cnn;
 
 ExtMemWord * bufIn, * bufOut;
 
-void FoldedMVInit(const char * attachName) {
+void FoldedMVInit() {
   if (!bufIn) {
     bufIn = new ExtMemWord[INPUT_BUF_ENTRIES];
     if (!bufIn) {
