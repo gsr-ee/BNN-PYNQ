@@ -40,32 +40,22 @@
  * 
  *
  *****************************************************************************/
-#include "tiny_cnn/tiny_cnn.h"
-#include "tiny_cnn/util/util.h"
 #include <iostream>
 #include <string.h>
 #include <chrono>
 #include "foldedmv-offload.h"
 #include <algorithm>
+#include <vector>
+#include "utils.hpp"
 
 using namespace std;
-using namespace tiny_cnn;
-using namespace tiny_cnn::activation;
 
-void makeNetwork(network<mse, adagrad> & nn) {
-  nn
-#ifdef OFFLOAD
-    << chaninterleave_layer<identity>(3, 32 * 32, false)
-    << offloaded_layer(3 * 32 * 32, 10, &FixedFoldedMVOffload<8, 1, ap_int<16>>, 0xdeadbeef, 0)
-#endif
-    ;
-}
+
 
 extern "C" void load_parameters(const char* path) {
 #include "config.h"
-	FoldedMVInit("cnvW2A2-pynq");
-	network<mse, adagrad> nn;
-	makeNetwork(nn);
+	FoldedMVInit();
+
 	cout << "Setting network weights and thresholds in accelerator..." << endl;
 
 	FoldedMVLoadLayerMem(path, 0, L0_PE, L0_WMEM, L0_TMEM, L0_API);
@@ -77,18 +67,20 @@ extern "C" void load_parameters(const char* path) {
 	FoldedMVLoadLayerMem(path, 6, L6_PE, L6_WMEM, L6_TMEM, L6_API);
 	FoldedMVLoadLayerMem(path, 7, L7_PE, L7_WMEM, L7_TMEM, L7_API);
 	FoldedMVLoadLayerMem(path, 8, L8_PE, L8_WMEM, L8_TMEM, 0);
+
+	cout << "Weights and thresholds loaded in accelerator"<<endl;
 }
 
 extern "C" int inference(const char* path, int results[64], int number_class, float *usecPerImage) {
-	std::vector<label_t> test_labels;
-	std::vector<vec_t> test_images;
+	std::vector<std::vector<float>> test_images;
 	std::vector<int> class_result;
 	float usecPerImage_int;
 
-	FoldedMVInit("cnvW2A2-pynq");
-	network<mse, adagrad> nn;
-	makeNetwork(nn);
-	parse_cifar10(path, &test_images, &test_labels, -1.0, 1.0, 0, 0);
+	FoldedMVInit();
+
+	parse_cifar(path, &test_images, -1.0, 1.0);
+
+
 	class_result=testPrebuiltCIFAR10_from_image<8, 16, ap_int<16>>(test_images, number_class, usecPerImage_int);
 
 	if(results)
@@ -101,15 +93,13 @@ extern "C" int inference(const char* path, int results[64], int number_class, fl
 extern "C" int* inference_multiple(const char* path, int number_class, int *image_number, float *usecPerImage, int enable_detail = 0) {
 	std::vector<int> all_result;
 	std::vector<int> detailed_results;
-	std::vector<label_t> test_labels;
-	std::vector<vec_t> test_images;
+	std::vector<std::vector<float>> test_images;
 	float usecPerImage_int;
 	int * result;
 
-	FoldedMVInit("cnvW2A2-pynq");
-	network<mse, adagrad> nn;
-	makeNetwork(nn);
-	parse_cifar10(path, &test_images, &test_labels, -1.0, 1.0, 0, 0);
+	FoldedMVInit();
+
+	parse_cifar(path, &test_images, -1.0, 1.0);
 	all_result=testPrebuiltCIFAR10_multiple_images<8, 16, ap_int<16>>(test_images, number_class, detailed_results, usecPerImage_int);
 
 	if (image_number) {
