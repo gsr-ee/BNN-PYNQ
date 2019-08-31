@@ -45,7 +45,7 @@ inline void parse_cifar(const std::string& filename,
 
 #define MNIST_IMAGE_WIDTH (28)
 #define MNIST_IMAGE_HEIGHT (28)
-#define MNIST_IMAGE_SIZE (CIFAR10_IMAGE_WIDTH*CIFAR10_IMAGE_HEIGHT)
+#define MNIST_IMAGE_SIZE (MNIST_IMAGE_WIDTH*MNIST_IMAGE_HEIGHT)
 
 inline void parse_mnist(const std::string& filename,
                  std::vector<std::vector<float>> *train_images,
@@ -57,7 +57,7 @@ inline void parse_mnist(const std::string& filename,
 
     std::vector<unsigned char> buf(MNIST_IMAGE_SIZE);
 
-    //read the offsets and delete them since they are unused
+    //read the offsets and delete it since it's unused
     ifs.read((char*) &buf[0], 16);
     //buf.clear();
     //delete[] (char *) header[0];
