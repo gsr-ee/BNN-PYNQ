@@ -37,6 +37,7 @@ import tempfile
 RUNTIME_HW = "python_hw"
 RUNTIME_SW = "python_sw"
 
+NETWORK_CNVW11A11 = "cnvW11A11"
 NETWORK_CNVW1A1 = "cnvW1A1"
 NETWORK_CNVW1A2 = "cnvW1A2"
 NETWORK_CNVW2A2 = "cnvW2A2"
@@ -200,8 +201,6 @@ class CnvClassifier:
 		r = img[:,:,0].flatten()
 		g = img[:,:,1].flatten()
 		b = img[:,:,2].flatten()
-		label = np.identity(1, dtype=np.uint8)
-		fp.write(label.tobytes())
 		fp.write(r.tobytes())
 		fp.write(g.tobytes())
 		fp.write(b.tobytes())
