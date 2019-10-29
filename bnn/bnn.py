@@ -194,11 +194,11 @@ class CnvClassifier:
                 img=img.resize(size=(32,32))
                 img = np.array(img)
                 r = img[:,:,0].flatten()
-		g = img[:,:,1].flatten()
-		b = img[:,:,2].flatten()
-		fp.write(r.tobytes())
-		fp.write(g.tobytes())
-		fp.write(b.tobytes())
+                g = img[:,:,1].flatten()
+                b = img[:,:,2].flatten()
+                fp.write(r.tobytes())
+                fp.write(g.tobytes())
+                fp.write(b.tobytes())
 
 	# classify non cifar10 formatted image, result is highest ranked class
 	def classify_image(self, img):
