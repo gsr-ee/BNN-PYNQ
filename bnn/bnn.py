@@ -191,13 +191,14 @@ class CnvClassifier:
 	# converting image to cifar10 format
 	def image_to_cifar(self, img, fp):
 		# We resize the downloaded image to be 32x32 pixels as expected from the BNN
-		img.thumbnail((32, 32), Image.ANTIALIAS)
-		background = Image.new('RGBA', (32, 32), (255, 255, 255, 0))
-		background.paste(
-			img, (int((32 - img.size[0]) / 2), int((32 - img.size[1]) / 2))
-		)
-		# We write the image into the format used in the Cifar-10 dataset for code compatibility 
-		img = (np.array(background))
+		#img.thumbnail((32, 32), Image.ANTIALIAS)
+		#background = Image.new('RGBA', (32, 32), (255, 255, 255, 0))
+		#background.paste(
+		#	img, (int((32 - img.size[0]) / 2), int((32 - img.size[1]) / 2))
+		#)
+		# We write the image into the format used in the Cifar-10 dataset for code compatibility
+                img=img.resize(size=(32,32))
+                #img = (np.array(background))
 		r = img[:,:,0].flatten()
 		g = img[:,:,1].flatten()
 		b = img[:,:,2].flatten()
