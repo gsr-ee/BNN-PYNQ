@@ -192,7 +192,7 @@ class CnvClassifier:
 	def image_to_cifar(self, img, fp):
 		# We resize the downloaded image to be 32x32 pixels as expected from the BNN
                 img=img.resize(size=(32,32))
-                #img = (np.array(background))
+                img = (np.array(img))
 		r = img[:,:,0].flatten()
 		g = img[:,:,1].flatten()
 		b = img[:,:,2].flatten()
